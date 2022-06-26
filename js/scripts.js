@@ -8,20 +8,39 @@ pokemonList = [
 
 let pokemonRepository = (function ()
 {
-  let pokemonListIIFE = [];
+  let repository = [];
   function add(pokemon)
   {
-    pokemonListIIFE.push(pokemon);
+    repository.push(pokemon);
+  }
+  function addListItem(pokemon)
+  {
+    let pokemonList = document.querySelector('.pokemon-list');
+    let listPokemon = document.createElement('li');
+    let button = document.createElement('button');
+    button.innerText = pokemon.name;
+    button.classList.add("button-class");
+    listPokemon.appendChild(button);
+    pokemonList.appendChild(listPokemon);
+    button.addEventListener('click', showDetails);
+  }
+  function showDetails(pokemon)
+  {
+    console.log(pokemon.name);
   }
   function getAll()
   {
-    return pokemonListIIFE;
+    return repository;
   }
   return {
     add: add,
-    getAll: getAll
+    getAll: getAll,
+    showDetails: showDetails,
+    addListItem: addListItem
   };
 })();
+
+console.log(pokemonRepository.getAll());
 
 pokemonList.forEach(function(pokemon)
 {
@@ -30,14 +49,6 @@ pokemonList.forEach(function(pokemon)
 
 console.log(pokemonRepository.getAll());
 
-// for (let index = 0; index < pokemonList.length; index++)
-// {
-//   let message = "";
-//   if (pokemonList[index].height > 6)
-//   {
-//     message = " - Wow that's big!";
-//   }
-//   document.write("<p>" + "Name: " + pokemonList[index].name + "</p>");
-//   document.write("<p>" + "Height: " + pokemonList[index].height + message + "</p>");
-//   document.write("<p>" + "Types: " + pokemonList[index].types[0] + " and " + pokemonList[index].types[1] +  "</p>");
-// };
+pokemonRepository.getAll().forEach(function(pokemon) {
+  pokemonRepository.addListItem(pokemon);
+});
