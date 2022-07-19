@@ -31,6 +31,7 @@ body {
   overflow: auto;
   display: grid;
   text-align: center;
+
 }
 
 .modal {
@@ -42,6 +43,9 @@ body {
   width: 100%;
   max-width: 400px;
   text-align: left;
+  position: relative;
+  position: absolute;
+  top: 50%
 }
 
 .modal-close {
