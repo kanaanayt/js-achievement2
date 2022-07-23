@@ -21,10 +21,13 @@ let pokemonRepository = (function ()
     let pokemonList = document.querySelector('.pokemon-list');
     let listPokemon = document.createElement('li');
     let button = document.createElement('button');
-    let newButton = $('<button type="button" class="btn btn-primary" data-toggle="modal" data-target="myModal">');
-    newButton.innerText = pokemon.name;
-    newButton.classList.add("button-class");
-    listPokemon.appendChild(newButton);
+    button.innerText = pokemon.name;
+    button.classList.add("button-class");
+    listPokemon.appendChild(button);
+    // let newButton = $('<button type="button" class="btn btn-primary" data-toggle="modal" data-target="myModal">');
+    // newButton.innerText = pokemon.name;
+    // newButton.classList.add("button-class");
+    // listPokemon.appendChild(newButton);
     pokemonList.appendChild(listPokemon);
     button.addEventListener('click', showDetails.bind(null, pokemon));
   }
