@@ -19,23 +19,33 @@ let pokemonRepository = (function ()
   function addListItem(pokemon)
   {
     let pokemonList = document.querySelector('.pokemon-list');
-    let listPokemon = document.createElement('li');
-    let button = document.createElement('button');
-    button.innerText = pokemon.name;
-    button.classList.add("button-class");
-    listPokemon.appendChild(button);
+    let listPokemon = document.createElement('button');
+    listPokemon.classList.add("list-group-item");
+    listPokemon.classList.add("list-group-item-action");
+    listPokemon.classList.add("btn");
+    listPokemon.classList.add("btn-primary");
+    listPokemon.setAttribute("type", "button");
+    listPokemon.setAttribute("data-toggle", "modal");
+    listPokemon.setAttribute("data-target", "#myModal");
+    listPokemon.innerText = pokemon.name;
+    //showDetails(pokemon);
+    // let button = document.createElement('button');
+    // button.innerText = pokemon.name;
+    // button.classList.add("button-class");
+    // listPokemon.appendChild(button);
+
     // let newButton = $('<button type="button" class="btn btn-primary" data-toggle="modal" data-target="myModal">');
     // newButton.innerText = pokemon.name;
     // newButton.classList.add("button-class");
     // listPokemon.appendChild(newButton);
     pokemonList.appendChild(listPokemon);
-    button.addEventListener('click', showDetails.bind(null, pokemon));
+    listPokemon.addEventListener('click', showDetails.bind(null, pokemon));
   }
   function showDetails(pokemon)
   {
     loadDetails(pokemon)
-    .then( () => {
-      showModal(pokemon);
+    .then( (loadedPokemon) => {
+      showModal(loadedPokemon);
             //console.log(pokemon);
     });
   }
@@ -70,9 +80,12 @@ let pokemonRepository = (function ()
       return response.json();
     })
     .then( (details) => {
-      pokemon.imageUrl = details.sprites.front_default;
-      pokemon.height = details.height;
-      pokemon.types = details.types;
+      return {
+        detailsURL: pokemon.detailsURL,
+        imageUrl: details.sprites.front_default,
+        height: details.height,
+        types: details.types
+      };
     })
     .catch( (e) => {
       console.error(e);
@@ -80,6 +93,7 @@ let pokemonRepository = (function ()
   }
   function showModal(item)
   {
+    console.log(item);
     let modalBody = $(".modal-body");
     let modalTitle = $(".modal-title");
     let modalHeader = $(".modal-header");
@@ -88,7 +102,7 @@ let pokemonRepository = (function ()
     modalBody.empty();
 
     let nameElement = $("<h1>" + item.name + "</h1>");
-    let imageElement = $("<img class='modal-img'");
+    let imageElement = $("<img class='modal-img'/>");
     imageElement.attr("src", item.imageUrl);
     let heightElement = $("<p>" + "has a whopping height of " + item.height + "</p>");
     let typesElement = $("<p>" + " and is of type(s) " + item.types + "</p>");
